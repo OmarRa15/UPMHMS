@@ -1,4 +1,4 @@
-from flask import request
+# from flask import request
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -215,6 +215,7 @@ def rooms_query():
 class SelectRoomForm(FlaskForm):
     room_num = QuerySelectField(query_factory=rooms_query, allow_blank=False, get_label='room_num')
 
+
 @app.route('/reserve_request', methods=['GET', 'POST'])
 @login_required
 def reserveRequest():
@@ -229,6 +230,7 @@ def reserveRequest():
 
     if form.validate_on_submit():
         room_num = form.room_num.data
+        room_num = str(room_num)
         student_id = current_user.id
         student_name = str(current_user.first_name) + ' ' + str(current_user.last_name)
 
@@ -254,7 +256,7 @@ def changeRequest():
 
     if form.validate_on_submit():
         new_room_num = form.room_num.data  # access the data inside
-
+        new_room_num = str(new_room_num)
         student_id = current_user.id
         student_name = str(current_user.first_name) + ' ' + str(current_user.last_name)
 
