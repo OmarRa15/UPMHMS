@@ -1,9 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
-from wtforms_sqlalchemy.fields import QuerySelectField
-
-from Models import Room
 
 
 class LoginForm(FlaskForm):
@@ -33,11 +30,3 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField('Confirm_password', validators=[InputRequired(), Length(min=8, max=80)])
     first_name = StringField('First Name', validators=[InputRequired(), Length(min=3, max=20)])
     last_name = StringField('Last Name', validators=[InputRequired(), Length(min=3, max=20)])
-
-
-def rooms_query():
-    return Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None)
-
-
-class SelectRoomForm(FlaskForm):
-    room_num = QuerySelectField(query_factory=rooms_query, allow_blank=False, get_label='room_num')

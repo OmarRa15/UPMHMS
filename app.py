@@ -7,6 +7,8 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
+from wtforms_sqlalchemy.fields import QuerySelectField
+
 from send_mail import send_confirmation_mail, send_reset_mail
 from flask_forms import *
 from os import environ
@@ -206,6 +208,13 @@ def dashboard():
                            room=current_user.room)
 
 
+def rooms_query():
+    return Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None)
+
+
+class SelectRoomForm(FlaskForm):
+    room_num = QuerySelectField(query_factory=rooms_query, allow_blank=False, get_label='room_num')
+
 @app.route('/reserve_request', methods=['GET', 'POST'])
 @login_required
 def reserveRequest():
@@ -215,7 +224,9 @@ def reserveRequest():
         return render_template('messagePage.html', message='Sorry, you already have a room reserved')
     if current_user.reserve_request is not None:
         return render_template('messagePage.html', message='Sorry, you already have a request under process')
+
     form = SelectRoomForm()
+
     if form.validate_on_submit():
         room_num = form.room_num.data
         student_id = current_user.id
@@ -240,8 +251,9 @@ def changeRequest():
         return render_template('messagePage.html', message='Sorry, you already have a request under process')
 
     form = SelectRoomForm()
+
     if form.validate_on_submit():
-        new_room_num = form.room_num.data
+        new_room_num = form.room_num.data  # access the data inside
 
         student_id = current_user.id
         student_name = str(current_user.first_name) + ' ' + str(current_user.last_name)
