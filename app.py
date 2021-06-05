@@ -390,6 +390,33 @@ def admin():
                            changingRequests=changeRequests, request_no=reserveRequestsCount)
 
 
+@app.route('/add_student', methods=['GET', 'POST'])
+@login_required
+def add_student():
+    if not current_user.is_admin:
+        return abort(404)
+
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        username = form.username.data.lower()
+        password = form.password.data
+        email = form.email.data.lower()
+
+        hashedPass = generate_password_hash(password, method='sha256')
+
+        newUser = Users(first_name=form.first_name.data, last_name=form.last_name.data,
+                        username=username, email=email, password=hashedPass)
+
+        db.session.add(newUser)
+        db.session.commit()
+
+        flash("Student added Successfully!!")
+
+        return render_template('add_student.html', form=form)
+    return render_template('add_student.html', form=form)
+
+
 @app.route('/logout')
 @login_required
 def logout():
