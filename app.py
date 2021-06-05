@@ -10,7 +10,6 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignat
 from wtforms_sqlalchemy.fields import QuerySelectField
 
 from send_mail import send_confirmation_mail, send_reset_mail
-from flask_forms import *
 from os import environ
 
 app = Flask(__name__)
@@ -66,7 +65,7 @@ admin = Admin(app, index_view=MyAdminIndexView(url='/admin_views'))
 admin.add_view(UsersModelView(Users, db.session))
 admin.add_view(RoomsModelView(Room, db.session))
 
-
+from flask_forms import *
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
