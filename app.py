@@ -9,7 +9,6 @@ from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from send_mail import send_confirmation_mail, send_reset_mail
 from flask_forms import *
-from flask_login import UserMixin
 from os import environ
 
 app = Flask(__name__)
