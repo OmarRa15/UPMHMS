@@ -1,0 +1,156 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Student Dashboard
+{% endblock %}
+
+
+    {% block styles %}
+        <link rel="stylesheet" href="{{url_for('.static', filename='admin_style.css')}}">
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    {% endblock %}
+
+
+{% block content %}
+
+        <input type="checkbox" name="" id="sidebar-toggle">checkbox
+        <div class = " sidebar">
+            <div class = "sidebar-brand">
+                <div class="brand-flex">
+                    <img src="{{url_for('.static', filename='img/logo-en.png')}}" alt="" width="160px" height="49px">
+                    <div class="brand-icons">
+                        <div class="menu-toggle">
+                                <label for="sidebar-toggle">
+                                        <span class = "las la-bars"></span>
+                                </label>
+                        </div>
+{#                        <span class="las la-bell"></span>#}
+{#                        <span class="las la-user-circle"></span>#}
+                    </div>
+                </div>
+            </div>
+            <div class="side-bar-main">
+               <div class="sidebar-user">
+                <img src="{{url_for('.static', filename='img/user.png')}}" alt="" title="">
+                <div>
+                    <h3>{{ name }}</h3>
+                    <span>{{ email }}</span>
+                </div>
+               </div>
+               <div class="sidebar-menu">
+                   <div class="menu-head">
+                       <span>Dashboard</span>
+                   </div>
+                   <ul>
+                       <li>
+                           {% if not room %}
+                               <a href="{{url_for('reserveRequest')}}">
+                                   <span class="las "></span>
+                                   Reserve a room
+                               </a>
+                           {%  endif %}
+                       </li>
+
+                       {% if room %}
+                           <li>
+
+                            <a href="{{url_for('changeRequest')}}">
+                                <span class="las la-management"></span>
+                                Change a room
+                            </a>
+                           </li>
+
+                            <li>
+                            <a href="{{ url_for('leave_room') }}">
+                                <span class=""></span>
+                                Leave a room
+                            </a>
+                            </li>
+                       {% endif %}
+
+                   </ul>
+                   <div class="menu-head">
+                    <span>Applications</span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="https://outlook.office365.com/owa/?realm=upm.edu.sa">
+                            <span class="las "></span>
+                            ✉️ UPM Mailbox
+                        </a>
+                    </li>
+                    <li>
+                     <a href="https://www.upm.edu.sa/en">
+                         <span class="las la-UPMwebsite"></span>
+                         🖥 UPM website
+                     </a>
+                 </li>
+{#                 <li>#}
+{#                     <a href="">#}
+{#                         <span class="las la-calender"></span>#}
+{#                         📆 Calendar#}
+{#                     </a>#}
+{#                 </li>#}
+                </ul>
+               </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <div class="menu-toggle">
+                    <label for="sidebar-toggle">
+                        <span class = "las la-bars"></span>
+                    </label>
+                </div>
+            </header>
+
+            <main>
+                <div class="page-header">
+                    <div>
+                        <h1>{{ name }} Dashboard</h1>
+                        <small> you can see your current status here! </small>
+                    </div>
+                    <div class="header-actions">
+                        <button><a href="{{url_for('logout')}}" style="color: white">
+                            <span class="las la-sign-out-alt"></span>
+                            logout</a>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cards">
+                    <div class="cards-single">
+                        <div class="card-flex">
+                            <div class="card-info">
+                                <div class="card-head">
+                                    <span>Status</span>
+                                    <small>Your current Status</small>
+                                </div>
+
+                                {% if room %}
+                                    <h3>You are currently reserving room NO{{ room }}</h3>
+                                    <small>Please note that you can request to change your room or you can abandon it</small>
+                                {% endif %}
+
+                                {% if not room %}
+                                    <h2>No room reserved</h2>
+                                    <small>Please note you can reserve one room and change only once.</small>
+                                {% endif %}
+
+                            </div>
+                            <div class="card-chart success">
+                                <span class="las la-home"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </main>
+        </div>
+        <label for="sidebar-toggle" class="body-lable"></label>
+{% endblock %}

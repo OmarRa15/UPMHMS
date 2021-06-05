@@ -1,0 +1,334 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('.static', filename='admin_style.css')}}">
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+        <input type="checkbox" name="" id="sidebar-toggle">
+        <div class = "sidebar">
+            <div class = "sidebar-brand">
+                <div class="brand-flex">
+                    <img src="{{url_for('.static', filename='img/logo-en.png')}}" alt="" width="153px" height="50px">
+                    <div class="brand-icons">
+                        <div class="menu-toggle">
+                                <label for="sidebar-toggle">
+                                        <span class = "las la-bars"></span>
+                                </label>
+                        </div>
+{#                        <span class="las la-bell"></span>#}
+{#                        <span class="las la-user-circle"></span>#}
+                    </div>
+                </div>
+            </div>
+            <div class="side-bar-main">
+               <div class="sidebar-user">
+                <img src="{{url_for('.static', filename='img/user.png')}}" alt="" title="">
+                <div>
+                    <h3>{{ name }}</h3>
+                    <span>{{ email }}</span>
+                </div>
+               </div>
+               <div class="sidebar-menu">
+                   <div class="menu-head">
+                       <span>Dashboard</span>
+                   </div>
+                   <ul>
+                       <li>
+                           <a href="/admin_views/users">
+                               <span class="las "></span>
+                               👨🏻‍🎓 Student Management
+                           </a>
+                       </li>
+                       <li>
+                        <a href="/admin_views/room">
+                            <span class="las la-management"></span>
+                            🏠 Room Management
+                        </a>
+                    </li>
+{#                    <li>#}
+{#                        <a href="">#}
+{#                            <span class="las la-chart-pie2"></span>#}
+{#                            📂 Admin Management#}
+{#                        </a>#}
+{#                    </li>#}
+                   </ul>
+                   <div class="menu-head">
+                    <span>Applications</span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="https://outlook.office365.com/owa/?realm=upm.edu.sa">
+                            <span class="las "></span>
+                            ✉️ UPM Mailbox
+                        </a>
+                    </li>
+                    <li>
+                         <a href="https://www.upm.edu.sa/en">
+                             <span class="las la-UPMwebsite"></span>
+                             🖥 UPM website
+                         </a>
+                     </li>
+{#                 <li>#}
+{#                     <a href="">#}
+{#                         <span class="las la-calender"></span>#}
+{#                         📆 Calendar#}
+{#                     </a>#}
+{#                 </li>#}
+                </ul>
+               </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <div class="menu-toggle">
+                    <label for="sidebar-toggle">
+                        <span class = "las la-bars"></span>
+                    </label>
+                </div>
+                <a href="/logout" style="color:white">Logout</a>
+            </header>
+
+            <main>
+                <div class="page-header">
+                    <div>
+                        <h1>UPMHMS Admin Dashboard</h1>
+                        <small> Analytics Admin Monitor </small>
+                    </div>
+{#                    <div class="header-actions">#}
+{#                        <button>#}
+{#                            <span class="las la-file-export"></span>#}
+{#                            Export#}
+{#                        </button>#}
+{#                        <button>#}
+{#                            <span class="las la-tools"></span>#}
+{#                            Settings#}
+{#                        </button>#}
+{#                    </div>#}
+                </div>
+
+                <div class="cards">
+                    <div class="cards-single">
+                        <div class="card-flex">
+                            <div class="card-info">
+                                <div class="card-head">
+                                    <span>Students</span>
+                                    <small>Number of Students Registered</small>
+                                </div>
+                                <h2>{{ students_no }}</h2>
+
+{#                                <small>{{ students_persentage }}% hostel capacity</small>#}
+                            </div>
+                            <div class="card-chart success">
+                                <span class="las la-users"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cards-single">
+                        <div class="card-flex">
+                            <div class="card-info">
+                                <div class="card-head">
+                                    <span>Rooms</span>
+                                    <small>Number of Rooms available</small>
+                                </div>
+                                <h2>{{ rooms_no }}</h2>
+
+{#                                <small>{{ rooms_persentage }}% hostel capacity available</small>#}
+                            </div>
+                            <div class="card-chart blue">
+                                <span class="las la-home"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cards-single">
+                        <div class="card-flex">
+                            <div class="card-info">
+                                <div class="card-head">
+                                    <span>Reservation</span>
+                                    <small>Number of Reservation Requests</small>
+                                </div>
+                                <h2>{{ request_no }}</h2>
+
+                            </div>
+                            <div class="card-chart danger">
+                                <span class="las la-registered"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+{#                    <div class="analytics-card">#}
+{##}
+{#                        <div class="analytics-head">#}
+{#                            <h3>Action Needed</h3>#}
+{#                            <span class="las la-ellipsis-h"></span>#}
+{#                        </div>#}
+{##}
+{#                        <div class="analytics-chart">#}
+{#                            <div class="chart-circle">#}
+{#                                <h1>74%</h1>#}
+{#                            </div>#}
+{##}
+{#                            <div class="analytics-note">#}
+{#                                <small>Note:>>>>.... </small>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="analytics-btn">#}
+{#                            <button>Generate report</button>#}
+{#                        </div>#}
+{#                    </div>#}
+                <div class="jobs-grid">
+                    <div class="jobs" style="margin-top:30px;margin-right:20px; width:49%;float:left">
+                        <h2>Reservation Requests 📬 <small>See all reservation requests 📨 <span class="las la-arrow-down"></span> </small></h2>
+                        <div class="table-responsive">
+                            <table width = "100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                               <span class="indicator"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               Student Name
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               ID
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               Requested Room No.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   </tbody>
+                                   <tbody>
+                                   {% for request in reservationRequests %}
+                               <tr>
+                                   <td>
+                                       <div>
+                                          <span class="indicator even"></span>
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.student_name }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.student_id }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.room_num }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                          <a class="accept" href="{{ url_for('acceptReserve',student_id=request.student_id) }}" style="background:green ;color: white;border: 1px solid #fff;padding:.5rem;border-radius: 3px;" >Accept</a>
+                                       </div>
+                                   </td>
+                                   <td>
+                                      <div>
+                                          <a class="ignore" href="{{ url_for('ignoreReserve',student_id=request.student_id) }}" style="background:red ;color: white;border: 1px solid #fff;padding:.5rem;border-radius: 3px;"  >Ignore</a>
+                                      </div>
+                                  </td>
+                               </tr>
+                               {% endfor %}
+                           </tbody>
+                               </table>
+                        </div>
+                    </div>
+
+
+                    <div class="jobs" style="margin-top:30px; width:49%; float:left">
+                        <h2>Room Changing Requests 📬 <small>See all requests 📨 <span class="las la-arrow-down"></span> </small></h2>
+                        <div class="table-responsive">
+                            <table width = "100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                               <span class="indicator"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               Student Name
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               ID
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                               New Room No.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   </tbody>
+                                   <tbody>
+                                   {% for request in changingRequests %}
+                               <tr>
+                                   <td>
+                                       <div>
+                                          <span class="indicator even"></span>
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.student_name }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.student_id }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                           {{ request.new_room_num }}
+                                       </div>
+                                   </td>
+                                   <td>
+                                       <div>
+                                          <a class="accept" href="{{ url_for('acceptChange',student_id=request.student_id) }}" style="background:green ;color: white;border: 1px solid #fff;padding:.5rem;border-radius: 3px;" >Accept</a>
+                                       </div>
+                                   </td>
+                                   <td>
+                                      <div>
+                                          <a class="ignore" href="{{ url_for('ignoreChange',student_id=request.student_id) }}" style="background:red ;color: white;border: 1px solid #fff;padding:.5rem;border-radius: 3px;"  >Ignore</a>
+                                      </div>
+                                  </td>
+                               </tr>
+                               {% endfor %}
+                           </tbody>
+                               </table>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        <label for="sidebar-toggle" class="body-lable"></label>
+{% endblock %}
