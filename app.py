@@ -143,14 +143,6 @@ def signup():
         password = form.password.data
         email = form.email.data.lower()
 
-        user = Users.query.filter_by(username=username).first()
-        if user:
-            return render_template('signup.html', form=form, errorMsg="username already exists")
-
-        user = Users.query.filter_by(email=email).first()
-        if user:
-            return render_template('signup.html', form=form, errorMsg="email already exists")
-
         hashedPass = generate_password_hash(password, method='sha256')
 
         newUser = Users(first_name=form.first_name.data, last_name=form.last_name.data,
