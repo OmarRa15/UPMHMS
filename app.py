@@ -14,7 +14,7 @@ from os import environ
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = environ['SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI'] = environ['DATABASE_URL'][0:8]+'ql'+environ['DATABASE_URL'][8:]
+app.config['SQLALCHEMY_DATABASE_URI'] = environ['DATABASE_URL'][0:8] + 'ql' + environ['DATABASE_URL'][8:]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -28,14 +28,14 @@ loginManager.login_view = 'login'
 from Models import Users, Room, ReserveRequest, ChangeRequest
 
 
-
 @loginManager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
 
 class UsersModelView(ModelView):
-    column_list = ('id', 'first_name', 'last_name', 'username','email','is_admin','is_confirmed','room')
+    column_list = ('id', 'first_name', 'last_name', 'username', 'email', 'is_admin', 'is_confirmed', 'room')
+
     def is_accessible(self):
         if current_user.is_anonymous:
             return False
@@ -44,7 +44,8 @@ class UsersModelView(ModelView):
 
 
 class RoomsModelView(ModelView):
-    column_list = ('room_num', 'floor_num', 'is_reserved','user_id')
+    column_list = ('room_num', 'floor_num', 'is_reserved', 'user_id')
+
     def is_accessible(self):
         if current_user.is_anonymous:
             return False
@@ -165,7 +166,6 @@ def signup():
 
 @app.route('/send_confirmation/<email>')
 def send_confirmation(email):
-    
     if current_user.is_authenticated:
         return redirect('/dashboard')
 
@@ -229,9 +229,9 @@ def reserveRequest():
 
     rooms = Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None).all()
     for i in range(len(rooms)):
-	    rooms[i]=str(rooms[i])
+        rooms[i] = str(rooms[i])
     rooms.sort()
-    return render_template('reserve.html',msg='Reserve a Room', rooms=rooms)
+    return render_template('reserve.html', msg='Reserve a Room', rooms=rooms)
 
 
 @app.route('/change_request', methods=['GET', 'POST'])
@@ -258,9 +258,9 @@ def changeRequest():
 
     rooms = Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None).all()
     for i in range(len(rooms)):
-	    rooms[i]=str(rooms[i])
+        rooms[i] = str(rooms[i])
     rooms.sort()
-    return render_template('reserve.html',msg='Change your room', rooms=rooms)
+    return render_template('reserve.html', msg='Change your room', rooms=rooms)
 
 
 @app.route('/accept_reserve/<student_id>')
@@ -392,6 +392,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    db.create_all()
-    db.session.commit()
     app.run(debug=True)
