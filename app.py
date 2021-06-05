@@ -216,9 +216,9 @@ def reserveRequest():
         return render_template('messagePage.html', message='Sorry, you already have a room reserved')
     if current_user.reserve_request is not None:
         return render_template('messagePage.html', message='Sorry, you already have a request under process')
-
-    if request.method == 'POST':
-        room_num = request.form.get('room')
+    form = SelectRoomForm()
+    if form.validate_on_submit():
+        room_num = form.room_num.data
         student_id = current_user.id
         student_name = str(current_user.first_name) + ' ' + str(current_user.last_name)
 
@@ -227,11 +227,7 @@ def reserveRequest():
         db.session.commit()
         return redirect('/dashboard')
 
-    rooms = Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None).all()
-    for i in range(len(rooms)):
-        rooms[i] = str(rooms[i])
-    rooms.sort()
-    return render_template('reserve.html', msg='Reserve a Room', rooms=rooms)
+    return render_template('reserve.html', msg='Reserve a Room', form=form)
 
 
 @app.route('/change_request', methods=['GET', 'POST'])
@@ -244,8 +240,9 @@ def changeRequest():
     if current_user.change_request is not None:
         return render_template('messagePage.html', message='Sorry, you already have a request under process')
 
-    if request.method == 'POST':
-        new_room_num = request.form.get('room')  # access the data inside
+    form = SelectRoomForm()
+    if form.validate_on_submit():
+        new_room_num = form.room_num.data
 
         student_id = current_user.id
         student_name = str(current_user.first_name) + ' ' + str(current_user.last_name)
@@ -256,11 +253,7 @@ def changeRequest():
         db.session.commit()
         return redirect('/dashboard')
 
-    rooms = Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None).all()
-    for i in range(len(rooms)):
-        rooms[i] = str(rooms[i])
-    rooms.sort()
-    return render_template('reserve.html', msg='Change your room', rooms=rooms)
+    return render_template('reserve.html', msg='Change your room', form=form)
 
 
 @app.route('/accept_reserve/<student_id>')
