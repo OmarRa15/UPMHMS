@@ -38,8 +38,8 @@ class RegisterForm(FlaskForm):
         if user:
             raise ValidationError('User already exists')
 
-    def validate_email(self, email):
-        user = Users.query.filter_by(email=email.data).first()
-
-        if user:
-            raise ValidationError('email already exists')
+    # def validate_email(self, email):
+    #     user = Users.query.filter_by(email=email.data).first()
+    #
+    #     if user:
+    #         raise ValidationError('email already exists')
