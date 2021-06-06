@@ -2,7 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
 from werkzeug.security import check_password_hash
-from Models import Users
+from wtforms_sqlalchemy.fields import QuerySelectField
+
+from Models import Users, Room
 
 
 class LoginForm(FlaskForm):
@@ -58,3 +60,11 @@ class RegisterForm(FlaskForm):
 
         if user:
             raise ValidationError('email already exists')
+
+
+def rooms_query():
+    return Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None)
+
+
+class SelectRoomForm(FlaskForm):
+    room_num = QuerySelectField(query_factory=rooms_query, allow_blank=False, get_label='room_num')

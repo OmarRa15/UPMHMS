@@ -4,9 +4,8 @@ from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import generate_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
-from wtforms_sqlalchemy.fields import QuerySelectField
 
-from Models import db, Room, ReserveRequest, ChangeRequest
+from Models import db, ReserveRequest, ChangeRequest
 from app import app
 from flask_forms import *
 from send_mail import send_reset_mail, send_confirmation_mail
@@ -152,14 +151,6 @@ def dashboard():
         return redirect('/admin')
     return render_template('student-dashboard.html', name=current_user.first_name, email=current_user.email,
                            room=current_user.room)
-
-
-def rooms_query():
-    return Room.query.filter_by(is_reserved=False, change_request=None, reserve_request=None)
-
-
-class SelectRoomForm(FlaskForm):
-    room_num = QuerySelectField(query_factory=rooms_query, allow_blank=False, get_label='room_num')
 
 
 @app.route('/reserve_request', methods=['GET', 'POST'])
