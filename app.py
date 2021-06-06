@@ -76,17 +76,15 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(username=form.username.data.lower()).first()
-        if user:
-            if check_password_hash(user.password, form.password.data):
-                if not user.is_confirmed:
-                    return '<h1 style= "text-align: center">Your Email hasn\'t been confirmed yet,' \
-                           '\nPlease <a href="{}">click here</a> to confirm your email <h1>' \
-                        .format(url_for('send_confirmation', email=user.email, _external=True))
-                login_user(user, remember=form.remember.data)
-                if current_user.is_admin:
-                    return redirect('/admin')
-                return redirect('/dashboard')
-        return render_template('login.html', form=form, errorMsg="Invalid Username or password")
+
+        if not user.is_confirmed:
+            return '<h1 style= "text-align: center">Your Email hasn\'t been confirmed yet,' \
+                   '\nPlease <a href="{}">click here</a> to confirm your email <h1>' \
+                .format(url_for('send_confirmation', email=user.email, _external=True))
+        login_user(user, remember=form.remember.data)
+        if current_user.is_admin:
+            return redirect('/admin')
+        return redirect('/dashboard')
 
     return render_template('login.html', form=form)
 
@@ -109,7 +107,6 @@ def forgot():
             message = "The email could not be sent. Please try again later"
             return render_template('messagePage.html', message=message)
 
-        return render_template('forgot.html', form=form, errorMsg="Invalid email")
     return render_template('forgot.html', form=form)
 
 

@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
+from werkzeug.security import check_password_hash
 from Models import Users
 
 
@@ -9,11 +10,25 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('remember me')
 
+    def validate_username(self, username):
+        user = Users.query.filter_by(username=username.data.lower()).first()
+
+        if not user:
+            raise ValidationError('incorrect username or password')
+        if not check_password_hash(user.password, self.password.data):
+            raise ValidationError('incorrect username or password')
+
 
 class EmailForm(FlaskForm):
     email = StringField('Enter Your email',
                         validators=[InputRequired(), Email(message='Invalid email', check_deliverability=True),
                                     Length(max=50)])
+
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data.lower()).first()
+
+        if not user:
+            raise ValidationError('email doesn\'t exists')
 
 
 class ResetForm(FlaskForm):
