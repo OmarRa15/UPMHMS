@@ -20,12 +20,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 Bootstrap(app)
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 loginManager = LoginManager()
 loginManager.init_app(app)
 loginManager.login_view = 'login'
 
-from Models import Users, Room, ReserveRequest, ChangeRequest
+from Models import db, Users, Room, ReserveRequest, ChangeRequest
 
 
 @loginManager.user_loader
