@@ -1,7 +1,7 @@
 # from flask import request
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_admin import Admin, AdminIndexView
@@ -259,6 +259,13 @@ def changeRequest():
     return render_template('reserve.html', msg='Change your room', form=form)
 
 
+def reserveRoom(room_num, student_id):
+    room = Room.query.filter_by(room_num=room_num).first()
+    room.is_reserved = True
+    room.user_id = student_id
+    db.session.commit()
+
+
 @app.route('/accept_reserve/<student_id>')
 @login_required
 def acceptReserve(student_id):
@@ -272,10 +279,7 @@ def acceptReserve(student_id):
     room_num = request_.room_num
     student_id = request_.student_id
 
-    room = Room.query.filter_by(room_num=room_num).first()
-    room.is_reserved = True
-    room.user_id = student_id
-    db.session.commit()
+    reserveRoom(room_num, student_id)
 
     db.session.delete(request_)
     db.session.commit()
@@ -299,10 +303,7 @@ def acceptChange(student_id):
     old_room.is_reserved = False
     old_room.user_id = None
 
-    newRoom = Room.query.filter_by(room_num=new_room_num).first()
-    newRoom.is_reserved = True
-    newRoom.user_id = student_id
-    db.session.commit()
+    reserveRoom(new_room_num, student_id)
 
     db.session.delete(request_)
     db.session.commit()
