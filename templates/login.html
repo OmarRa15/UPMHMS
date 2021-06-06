@@ -44,16 +44,16 @@ Login
         {% endif %}
         {% endwith %}
 
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <h4 style="color: red">{{ errorMsg }}</h4>
-        {{ form.hidden_tag() }}
-        {{ form.csrf_token }}
-        {{ wtf.form_field(form.username)}}
-        {{ wtf.form_field(form.password)}}
-        {{ wtf.form_field(form.remember)}}<br/>
-        <a href="{{ url_for('forgot') }}">Forgot Your Password?</a><br/>
-        <a href="{{ url_for('signup') }}">don't have an account?<br/>sign up here!!</a><br/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <h4 style="color: red">{{ errorMsg }}</h4>
+          {{ form.hidden_tag() }}
+          {{ form.csrf_token }}
+          {{ wtf.form_field(form.username) }}
+          {{ wtf.form_field(form.password) }}
+          {{ wtf.form_field(form.remember) }}<br/>
+          <a href="{{ url_for('forgot') }}">Forgot Your Password?</a><br/><br/>
+          <a href="{{ url_for('signup') }}">don't have an account?<br/>sign up here!!</a><br/>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 
     </div> <!-- /container -->
