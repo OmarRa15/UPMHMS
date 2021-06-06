@@ -309,11 +309,11 @@ def acceptChange(student_id):
     return redirect('/admin')
 
 
-def deleteRequest(request):
-    if request is None:
+def deleteRecord(record):
+    if record is None:
         return abort(404)
 
-    db.session.delete(request)
+    db.session.delete(record)
     db.session.commit()
 
 
@@ -324,7 +324,7 @@ def ignoreReserve(student_id):
         return abort(404)
 
     request_ = ReserveRequest.query.filter_by(student_id=student_id).first()
-    deleteRequest(request_)
+    deleteRecord(request_)
 
     return redirect('/admin')
 
@@ -336,7 +336,7 @@ def ignoreChange(student_id):
         return abort(404)
 
     request_ = ChangeRequest.query.filter_by(student_id=student_id).first()
-    deleteRequest(request_)
+    deleteRecord(request_)
 
     return redirect('/admin')
 
