@@ -20,6 +20,15 @@ class Users(db.Model, UserMixin):
     reserve_request = db.relationship('ReserveRequest', backref='users', uselist=False)
     change_request = db.relationship('ChangeRequest', backref='users', uselist=False)
 
+    def __init__(self, first_name, last_name, username, email, password, is_admin=False, is_confirmed=False):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.username = username
+        self.email = email
+        self.password = password
+        self.is_admin = is_admin
+        self.is_confirmed = is_confirmed
+
     def __repr__(self):
         return 'ID: ' + str(self.id) + ' ' + self.first_name + ' ' + self.last_name
 

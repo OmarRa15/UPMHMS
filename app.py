@@ -66,6 +66,8 @@ admin.add_view(UsersModelView(Users, db.session))
 admin.add_view(RoomsModelView(Room, db.session))
 
 from flask_forms import *
+
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -397,7 +399,7 @@ def add_student():
         hashedPass = generate_password_hash(password, method='sha256')
 
         newUser = Users(first_name=form.first_name.data, last_name=form.last_name.data,
-                        username=username, email=email, password=hashedPass)
+                        username=username, email=email, password=hashedPass, is_confirmed=True)
 
         db.session.add(newUser)
         db.session.commit()
