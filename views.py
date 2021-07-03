@@ -3,7 +3,7 @@ from flask_login import login_user, login_required, current_user, logout_user, L
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import generate_password_hash
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature, BadSignature
 
 from Models import db, ReserveRequest, ChangeRequest
 from app import app
@@ -108,6 +108,8 @@ def resetPass(token):
         return render_template('messagePage.html', message="Signature Expired")
     except BadTimeSignature:
         return abort(404)
+    except BadSignature:
+        return 'abort(404)'
 
 
 @app.route('/send_confirmation/<email>')
@@ -142,11 +144,9 @@ def confirm_email(token):
         return render_template('messagePage.html', message='Signature Expired')
     except BadTimeSignature:
         return abort(404)
-    except Exception as e:
-        print('\n\n\n-----------------------------------------------------------------------------------\n\n\n')
-        print(e)
-        print('\n\n\n-----------------------------------------------------------------------------------\n\n\n')
-        return abort(404)
+    except BadSignature:
+        return 'abort(404)'
+
 
 @app.route('/dashboard')
 @login_required
