@@ -142,6 +142,10 @@ def confirm_email(token):
         return render_template('messagePage.html', message='Signature Expired')
     except BadTimeSignature:
         return abort(404)
+    except Exception as e:
+        print('\n\n\n-----------------------------------------------------------------------------------\n\n\n')
+        print(e)
+        print('\n\n\n-----------------------------------------------------------------------------------\n\n\n')
 
 
 @app.route('/dashboard')
