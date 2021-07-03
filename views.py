@@ -109,7 +109,7 @@ def resetPass(token):
     except BadTimeSignature:
         return abort(404)
     except BadSignature:
-        return 'abort(404)'
+        return abort(404)
 
 
 @app.route('/send_confirmation/<email>')
@@ -145,7 +145,7 @@ def confirm_email(token):
     except BadTimeSignature:
         return abort(404)
     except BadSignature:
-        return 'abort(404)'
+        return abort(404)
 
 
 @app.route('/dashboard')
