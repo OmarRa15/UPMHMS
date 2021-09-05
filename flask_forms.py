@@ -40,13 +40,16 @@ class ResetForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email', check_deliverability=True),
+    # email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email', check_deliverability=True),
+    #                                          Length(max=50)])
+    email = StringField('Email', validators=[InputRequired(),
                                              Length(max=50)])
+
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80),
                                                      EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Confirm_password', validators=[InputRequired(), Length(min=8, max=80)])
-    first_name = StringField('First Name', validators=[InputRequired(), Length(min=3, max=80)])
+    first_name = StringField('First Name', validators=[InputRequired(), Length(min=3, max=20)])
     last_name = StringField('Last Name', validators=[InputRequired(), Length(min=3, max=20)])
 
     def validate_username(self, username):
