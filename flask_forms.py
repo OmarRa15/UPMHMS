@@ -46,7 +46,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80),
                                                      EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Confirm_password', validators=[InputRequired(), Length(min=8, max=80)])
-    first_name = StringField('First Name', validators=[InputRequired(), Length(min=3, max=20)])
+    first_name = StringField('First Name', validators=[InputRequired(), Length(min=3, max=80)])
     last_name = StringField('Last Name', validators=[InputRequired(), Length(min=3, max=20)])
 
     def validate_username(self, username):
