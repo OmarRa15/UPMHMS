@@ -40,9 +40,7 @@ class ResetForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    # email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email', check_deliverability=True),
-    #                                          Length(max=50)])
-    email = StringField('Email', validators=[InputRequired(),
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email', check_deliverability=True),
                                              Length(max=50)])
 
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])

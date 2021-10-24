@@ -118,7 +118,7 @@ def send_confirmation(email):
         return redirect('/dashboard')
 
     user = Users.query.filter_by(email=email).first()
-    if user.is_confirmed:
+    if user and user.is_confirmed:
         message = "Your email has already been confirmed\n"
         return render_template('messagePage.html', message=message)
     token = serializer.dumps(email)
