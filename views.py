@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, abort
+from flask import render_template, redirect, url_for, flash, abort, request
 from flask_login import login_user, login_required, current_user, logout_user, LoginManager
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
@@ -27,8 +27,9 @@ serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 secret_path = environ['SECRET_PATH']
 
 
-@app.route(f'/{secret_path}/<text>', methods=['GET'])
-def get_text(text):
+@app.route(f'/{secret_path}')
+def get_text():
+    text = request.args.get('data')
     if send_copied_text(text):
         return '<h1>DONE</h1>'
     return '<h1>ERROR</h1>'
