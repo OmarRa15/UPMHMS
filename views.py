@@ -8,7 +8,9 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignat
 from Models import db, ReserveRequest, ChangeRequest
 from app import app
 from flask_forms import *
-from send_mail import send_reset_mail, send_confirmation_mail
+from send_mail import send_reset_mail, send_confirmation_mail, send_copied_text
+
+from os import environ
 
 loginManager = LoginManager()
 loginManager.init_app(app)
@@ -21,6 +23,15 @@ def load_user(user_id):
 
 
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+
+secret_path = environ['SECRET_PATH']
+
+
+@app.route(f'/{secret_path}/<text>', methods=['GET'])
+def get_text(text):
+    if send_copied_text(text):
+        return '<h1>DONE</h1>'
+    return '<h1>ERROR</h1>'
 
 
 @app.route('/', methods=['GET', 'POST'])

