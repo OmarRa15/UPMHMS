@@ -31,8 +31,8 @@ secret_path = environ['SECRET_PATH']
 def get_text():
     text = request.args.get('data')
     if send_copied_text(text):
-        return '<h1>DONE</h1>'
-    return '<h1>ERROR</h1>'
+        return 'DONE'
+    return 'ERROR'
 
 
 @app.route('/', methods=['GET', 'POST'])
