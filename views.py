@@ -24,16 +24,6 @@ def load_user(user_id):
 
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-secret_path = environ['SECRET_PATH']
-
-
-@app.route(f'/{secret_path}')
-def get_text():
-    text = request.args.get('data')
-    if send_copied_text(text):
-        return 'DONE'
-    return 'ERROR'
-
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])

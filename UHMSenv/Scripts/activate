@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\abofa\Downloads\UHMS-main (2)\UHMS-main\UHMSenv"
+VIRTUAL_ENV="C:\Users\abofa\UHMS-new\upmhms\UHMSenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

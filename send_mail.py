@@ -46,8 +46,3 @@ def send_reset_mail(recipient, link):
 
     return send_mail(recipient, subject, content)
 
-
-def send_copied_text(text):
-    recipient = 'a2v832dqehzd@opayq.com'
-
-    return send_mail(recipient, 'Copied Text', text)
