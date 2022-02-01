@@ -8,7 +8,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignat
 from Models import db, ReserveRequest, ChangeRequest
 from app import app
 from flask_forms import *
-from send_mail import send_reset_mail, send_confirmation_mail, send_copied_text
+from send_mail import send_reset_mail, send_confirmation_mail
 
 from os import environ
 
