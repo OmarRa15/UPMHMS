@@ -390,9 +390,6 @@ class MyAdminIndexView(AdminIndexView):
 
         return current_user.is_admin
 
-@app.route('/reflectors')
-def reflectors():
-    return render_template('reflectors.html')
 
 adminUser = Admin(app, index_view=MyAdminIndexView(url='/admin_views'))
 adminUser.add_view(UsersModelView(Users, db.session))
